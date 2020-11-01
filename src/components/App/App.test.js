@@ -1,8 +1,14 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen, waitFor } from "@testing-library/react";
+import App from "./App";
 
-test('renders learn react link', () => {
+test("renders learn react link", async () => {
+  jest.spyOn(global, "fetch").mockResolvedValue({
+    json: jest
+      .fn()
+      .mockResolvedValue([{ id: 1, title: "i am title", createdAt: 12345 }]),
+  });
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  await waitFor(() =>
+    expect(screen.getByText(/i am title/i)).toBeInTheDocument()
+  );
 });

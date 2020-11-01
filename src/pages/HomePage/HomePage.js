@@ -45,7 +45,7 @@ export default function HomePage() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    getPosts().then((posts) => setPosts(posts));
+    //getPosts().then((posts) => setPosts(posts));
   }, []);
 
   return (
