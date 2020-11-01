@@ -1,7 +1,8 @@
-import logo from "./logo.svg";
 import "./App.css";
 import styled from "styled-components";
 import { MEDIA_QUERY_MD, MEDIA_QUERY_LG } from "./constants/style";
+import React from "react";
+import PropTypes from "prop-types";
 
 const TodoItemWrapper = styled.div`
   display: flex;
@@ -67,7 +68,7 @@ export default function TodoItem({
   handleDeleteTodo,
   handleToggleIsDone,
 }) {
-  const handleTogglerClick = () => {
+  const handleToggleClick = () => {
     handleToggleIsDone(todo.id);
   };
 
@@ -81,7 +82,7 @@ export default function TodoItem({
         {todo.content}
       </TodoContent>
       <TodoButtonWrapper>
-        <Button onClick={handleTogglerClick}>
+        <Button onClick={handleToggleClick}>
           {todo.isDone && "未完成"}
           {!todo.isDone && "已完成"}
         </Button>
@@ -90,3 +91,15 @@ export default function TodoItem({
     </TodoItemWrapper>
   );
 }
+
+TodoItem.propTypes = {
+  className: PropTypes.string,
+  size: PropTypes.string,
+  todo: PropTypes.shape({
+    id: PropTypes.number,
+    content: PropTypes.string,
+    isDone: PropTypes.bool,
+  }),
+  handleDeleteTodo: PropTypes.func,
+  handleToggleIsDone: PropTypes.func,
+};
