@@ -8,6 +8,35 @@ export const getPosts = () => {
   );
 };
 
+export const getPost = (id) => {
+  return fetch(`${BASE_URL}/posts/${id}?_expand=user`).then((res) =>
+    res.json()
+  );
+};
+
+export const createPost = (payload) => {
+  const token = getAuthToken();
+  return fetch(`${BASE_URL}/posts`, {
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${token}`,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  }).then((res) => res.json());
+};
+
+export const removePost = (id) => {
+  const token = getAuthToken();
+  return fetch(`${BASE_URL}/posts/${id}`, {
+    method: "DELETE",
+    headers: {
+      authorization: `Bearer ${token}`,
+      "content-type": "application/json",
+    },
+  }).then((res) => res.json());
+};
+
 export const login = (username, password) => {
   return fetch(`${BASE_URL}/login`, {
     method: "POST",

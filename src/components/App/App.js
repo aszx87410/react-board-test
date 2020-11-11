@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import LoginPage from "../../pages/LoginPage";
 import HomePage from "../../pages/HomePage";
+import ArticlePage from "../../pages/ArticlePage";
+import NewPostPage from "../../pages/NewPostPage";
 import Header from "../Header";
 import { AuthContext } from "../../contexts";
 import { getMe } from "../../WebAPI";
@@ -32,6 +34,12 @@ function App() {
           <Switch>
             <Route exact path="/">
               <HomePage />
+            </Route>
+            <Route exact path="/posts/:id">
+              <ArticlePage />
+            </Route>
+            <Route path="/new-post">
+              <NewPostPage />
             </Route>
             <Route path="/login">
               <LoginPage />
