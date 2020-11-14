@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
 import { useParams, useHistory } from "react-router-dom";
-import { getPost, removePost } from "../../WebAPI";
+import { removePost } from "../../WebAPI";
+import { getPost } from "../../redux/reducers/postReducer";
+import { useDispatch, useSelector } from "react-redux";
 
 const Root = styled.div`
   width: 80%;
@@ -56,10 +58,11 @@ Post.propTypes = {
 };
 
 export default function ArticlePage() {
-  const [post, setPost] = useState();
-  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const isLoading = useSelector((store) => store.posts.isLoadingPost);
+  const post = useSelector((store) => store.posts.post);
 
   const handleDelete = () => {
     removePost(id).then(() => {
@@ -68,16 +71,8 @@ export default function ArticlePage() {
   };
 
   useEffect(() => {
-    setIsLoading(true);
-    getPost(id)
-      .then((post) => {
-        setIsLoading(false);
-        setPost(post);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-      });
-  }, [id]);
+    dispatch(getPost(id));
+  }, [id, dispatch]);
 
   return (
     <Root>
